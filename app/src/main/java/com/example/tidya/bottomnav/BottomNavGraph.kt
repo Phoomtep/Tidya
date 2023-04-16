@@ -8,6 +8,7 @@ import com.example.tidya.presentation.HistoryScreen
 import com.example.tidya.presentation.HomeScreen
 import com.example.tidya.presentation.SearchScreen
 import com.example.tidya.model.User
+import com.example.tidya.presentation.AddScreen
 
 @Composable
 fun BottomNavGraph(
@@ -20,7 +21,7 @@ fun BottomNavGraph(
     ){
         composable(route = BottomBarScreen.Home.route)
         {
-            HomeScreen(user = user)
+            HomeScreen(user = user, navController = navController)
         }
         composable(route = BottomBarScreen.Search.route)
         {
@@ -29,6 +30,9 @@ fun BottomNavGraph(
         composable(route = BottomBarScreen.History.route)
         {
             HistoryScreen(user = user)
+        }
+        composable(route = BottomBarScreen.Add.route){
+            AddScreen(navController = navController)
         }
     }
 

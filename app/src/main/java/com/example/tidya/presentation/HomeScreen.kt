@@ -11,13 +11,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.tidya.R
+import com.example.tidya.bottomnav.BottomBarScreen
 import com.example.tidya.model.User
 import com.example.tidya.outfit
 
 
 @Composable
-fun HomeScreen(user: User){  //HomeScreen(user: User)
+fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: User)
     Scaffold {innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()
@@ -59,7 +61,8 @@ fun HomeScreen(user: User){  //HomeScreen(user: User)
             Text(text = "Today activityes", modifier = Modifier
                 .padding(start = 20.dp, top = 15.dp),fontWeight = FontWeight.Bold)
 
-            IconButton(modifier = Modifier.padding(start = 180.dp), onClick = {}) {
+            IconButton(modifier = Modifier.padding(start = 180.dp), onClick = {navController.navigate(
+                BottomBarScreen.Add.route)}) {
                 Icon(painter = painterResource(id = R.drawable.baseline_add_24),
                     contentDescription = null,
                     tint = Color.Unspecified)
