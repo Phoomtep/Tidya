@@ -1,5 +1,7 @@
 package com.example.tidya.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,10 +18,12 @@ import com.example.tidya.R
 import com.example.tidya.bottomnav.BottomBarScreen
 import com.example.tidya.model.User
 import com.example.tidya.outfit
+import java.time.LocalDate
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: User)
+    val currentDate = LocalDate.now()
     Scaffold {innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()
@@ -57,7 +61,9 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     fontSize = 16.sp,
                     modifier = Modifier.padding(start = 80.dp))
             }
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)) {
             Text(text = "Today activityes", modifier = Modifier
                 .padding(start = 20.dp, top = 15.dp),fontWeight = FontWeight.Bold)
 
@@ -68,6 +74,13 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     tint = Color.Unspecified)
                 }
             }
+            
+            Text(text = "\"Today's date is $currentDate\"") //currentDate วันทีปัจจุบัน
+
+            for (i in 1..3){ //(Data ทั้งหมดที่จะแสดง Select มาแล้ว)
+                //ตัวแสดงยาจาฐานข้อมูล
+            }
+
         }
     }
 }
