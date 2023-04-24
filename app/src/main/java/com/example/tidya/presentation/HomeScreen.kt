@@ -4,7 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -75,10 +77,15 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                 }
             }
             
-            Text(text = "\"Today's date is $currentDate\"") //currentDate วันทีปัจจุบัน
+            //Text(text = "\"Today's date is $currentDate\"") //currentDate วันทีปัจจุบัน
 
-            for (i in 1..3){ //(Data ทั้งหมดที่จะแสดง Select มาแล้ว)
-                //ตัวแสดงยาจาฐานข้อมูล
+            Column(modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 60.dp)) {
+                for (i in 1..10){ //(Data ทั้งหมดที่จะแสดง Select มาแล้ว)
+                    //Drug("Drug", "11:00", true)
+                    Drug()
+                }
             }
 
         }
