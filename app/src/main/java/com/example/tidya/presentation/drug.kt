@@ -40,10 +40,11 @@ fun Drug(name: String, time: String, isComplete: Boolean) {
             Text(text = name, Modifier
                 .padding(start = 20.dp)
                 , fontWeight = FontWeight.Bold
+                , fontSize = 15.sp
                 , color = textcolor)
             Text(text = time, Modifier
-                .padding(top = 10.dp, start = 20.dp)
-                , fontWeight = FontWeight.Normal
+                .padding(top = 2.dp, start = 20.dp)
+                , fontWeight = FontWeight.Bold
                 , fontSize = 10.sp
                 , color = textcolor)
         }
@@ -58,7 +59,7 @@ fun Drug(name: String, time: String, isComplete: Boolean) {
                 .background(color = Color(0xffD9D9D9), shape = RoundedCornerShape(5.dp))
                 .height(24.dp)
                 .width(24.dp)
-            , onClick = { status = !status ;println("$name | $status") }) {
+            , onClick = { status = !status ;println("$name | $status") }) { //เขียน Update Database ตรงนี้ !!!!!!
             Icon(painter = painterResource(id = R.drawable.baseline_check_24),
                 contentDescription = null,
                 tint = when (status){

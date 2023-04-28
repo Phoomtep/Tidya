@@ -25,12 +25,7 @@ fun HistoryScreen(user: User){
                 fontSize = 20.sp,
                 fontFamily = outfit
             )
-            Text(text = "Hi ${user.displayName}",
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h4,
-                fontSize = 30.sp)
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = user.email)
+
         }
     }
 }
