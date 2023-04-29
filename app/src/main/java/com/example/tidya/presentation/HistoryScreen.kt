@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tidya.model.User
 import com.example.tidya.outfit
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -36,12 +37,13 @@ fun HistoryScreen(user: User){
     val selectedyear = calendar[Calendar.YEAR]
     val selectedmonth = calendar[Calendar.MONTH]
     val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
-    val selectedDate = remember { mutableStateOf("$formattedDate") }
+    val selectedDate = remember { mutableStateOf(LocalDate.now()) }
+    val formatDate = selectedDate.value.format(formatter)
 
     val dateToday = DatePickerDialog(
         context,
         { _: DatePicker, selectedyear: Int, selectedmonth: Int, selectedDayOfMonth: Int ->
-            selectedDate.value = "$selectedDayOfMonth/${selectedmonth + 1}/$selectedyear"
+            selectedDate.value = LocalDate.of(selectedyear, selectedmonth + 1, selectedDayOfMonth)
         }, selectedyear, selectedmonth, dayOfMonth
     )
 
@@ -56,7 +58,7 @@ fun HistoryScreen(user: User){
                 fontFamily = outfit
             )
 
-            Text(text = "${selectedDate.value}", modifier = Modifier
+            Text(text = "${formatDate}", modifier = Modifier
                 .clickable { dateToday.show() }
                 .fillMaxWidth()
                 ,textAlign = TextAlign.Center

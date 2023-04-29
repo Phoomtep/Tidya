@@ -48,7 +48,7 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     Icon(painter = painterResource(id = R.drawable.baseline_face_24),
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.padding(start = 20.dp, top = 20.dp))
+                        modifier = Modifier.padding(start = 20.dp, top = 22.dp))
                     Text(text = "${user.displayName}",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
