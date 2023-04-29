@@ -76,20 +76,15 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     tint = Color.Unspecified)
                 }
             }
-            
-            //Text(text = "\"Today's date is $currentDate\"") //currentDate วันทีปัจจุบัน
 
             Column(modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 60.dp)) {
-//                for (i in 1..10){ //(Data ทั้งหมดที่จะแสดง Select มาแล้ว)
-//                    //Drug("Drug", "11:00", true)
-//                    Drug()
-//                }
+
                 Drug("Drug", "11:00", true)
                 Drug("Drug2", "12:00", false)
-            }
 
+            }
         }
     }
 }
