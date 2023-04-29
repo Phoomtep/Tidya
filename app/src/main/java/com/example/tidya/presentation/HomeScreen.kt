@@ -4,7 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,7 +48,7 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     Icon(painter = painterResource(id = R.drawable.baseline_face_24),
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.padding(start = 20.dp, top = 20.dp))
+                        modifier = Modifier.padding(start = 20.dp, top = 22.dp))
                     Text(text = "${user.displayName}",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
@@ -74,13 +76,15 @@ fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: Us
                     tint = Color.Unspecified)
                 }
             }
-            
-            Text(text = "\"Today's date is $currentDate\"") //currentDate วันทีปัจจุบัน
 
-            for (i in 1..3){ //(Data ทั้งหมดที่จะแสดง Select มาแล้ว)
-                //ตัวแสดงยาจาฐานข้อมูล
+            Column(modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 60.dp)) {
+
+                Drug("Drug", "11:00", true)
+                Drug("Drug2", "12:00", false)
+
             }
-
         }
     }
 }
