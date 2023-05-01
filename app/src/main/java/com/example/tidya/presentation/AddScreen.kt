@@ -167,34 +167,34 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
             }
         }
 
-        Row(modifier = Modifier
-            .fillMaxSize()
-        ){
-            Text(text = "Frequency",Modifier.padding(top = 20.dp, start = 20.dp))
-            OutlinedTextField(
-                value = SelectedText,
-                onValueChange = { SelectedText = it },
-                modifier = Modifier.padding(start = 10.dp,end = 20.dp),
-                label = {Text("Choose")},
-                trailingIcon = {
-                    Icon(icon,"contentDescription",
-                        Modifier.clickable { selectedExpand = !selectedExpand })
-                }
-            )
-            DropdownMenu(
-                expanded = selectedExpand,
-                onDismissRequest = { selectedExpand = false }
-            ) {
-                selectedChoice.forEach { label ->
-                    DropdownMenuItem(onClick = {
-                        SelectedText = label
-                        selectedExpand = false
-                    }) {
-                        Text(text = label,Modifier.padding(top = 5.dp,start = 30.dp))
-                    }
-                }
-            }
-        }
+//        Row(modifier = Modifier
+//            .fillMaxSize()
+//        ){
+//            Text(text = "Frequency",Modifier.padding(top = 20.dp, start = 20.dp))
+//            OutlinedTextField(
+//                value = SelectedText,
+//                onValueChange = { SelectedText = it },
+//                modifier = Modifier.padding(start = 10.dp,end = 20.dp),
+//                label = {Text("Choose")},
+//                trailingIcon = {
+//                    Icon(icon,"contentDescription",
+//                        Modifier.clickable { selectedExpand = !selectedExpand })
+//                }
+//            )
+//            DropdownMenu(
+//                expanded = selectedExpand,
+//                onDismissRequest = { selectedExpand = false }
+//            ) {
+//                selectedChoice.forEach { label ->
+//                    DropdownMenuItem(onClick = {
+//                        SelectedText = label
+//                        selectedExpand = false
+//                    }) {
+//                        Text(text = label,Modifier.padding(top = 5.dp,start = 30.dp))
+//                    }
+//                }
+//            }
+//        }
 
         Column(
             Modifier
@@ -205,7 +205,7 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
         {
             Button(onClick = { drugViewModel.insertDrug(
                 GetDrug(name = name.value, time  = "${selectedTime.value}" , date = "${selectedDate.value}",)
-            )
+            ); navController.navigate(BottomBarScreen.Home.route)
             },Modifier.size(50.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff16C2D5)),
