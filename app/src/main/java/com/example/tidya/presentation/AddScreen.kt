@@ -170,26 +170,26 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
                 )
             }
 
-            Text(text = "To", Modifier.padding(top = 5.dp, end = 15.dp, start = 20.dp), fontSize = 15.sp, color = Color(0xff7D7D7D))
-
-            Row(modifier = Modifier.padding(end = 20.dp)) {
-                Button(
-                    onClick = {
-                        dateEvent.show()
-                    }, Modifier.padding(start = 20.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffEBEBEB))
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_calendar_event),
-                        contentDescription = null
-                    )
-                }
-                Text(
-                    text = "${formatDate2}",
-                    Modifier.padding(top = 15.dp, start = 20.dp),
-                    fontSize = 14.sp
-                )
-            }
+//            Text(text = "To", Modifier.padding(top = 5.dp, end = 15.dp, start = 20.dp), fontSize = 15.sp, color = Color(0xff7D7D7D))
+//
+//            Row(modifier = Modifier.padding(end = 20.dp)) {
+//                Button(
+//                    onClick = {
+//                        dateEvent.show()
+//                    }, Modifier.padding(start = 20.dp),
+//                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffEBEBEB))
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_calendar_event),
+//                        contentDescription = null
+//                    )
+//                }
+//                Text(
+//                    text = "${formatDate2}",
+//                    Modifier.padding(top = 15.dp, start = 20.dp),
+//                    fontSize = 14.sp
+//                )
+//            }
         }
 
         Column(
