@@ -31,7 +31,6 @@ fun Drug(id : Int ,name: String, time: String, isComplete: Boolean,drugViewModel
         false -> Color(0xff000000)
     }
 
-
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(start = 20.dp, end = 20.dp, top = 25.dp)

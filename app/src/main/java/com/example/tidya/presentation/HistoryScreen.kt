@@ -2,14 +2,18 @@ package com.example.tidya.presentation
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,18 +22,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.tidya.database.DrugViewModel
 import com.example.tidya.model.User
 import com.example.tidya.outfit
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.annotation.meta.When
 
-val currentDateTime = LocalDateTime.now()
+
 val formatter = DateTimeFormatter.ofPattern("d MMM yyyy")
-val formattedDate = currentDateTime.format(formatter)
 
 @Composable
-fun HistoryScreen(user: User){
+fun HistoryScreen(user: User,drugViewModel: DrugViewModel = hiltViewModel()){
+
+    val drugs = drugViewModel.drugs//.collectAsState(initial = emptyList())
 
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -68,11 +76,18 @@ fun HistoryScreen(user: User){
 
             )
 
-            Column(modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 60.dp)) {
+            LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
+                items(drugs.value) { drugs ->
+                    println(drugs.date)
+                    println("${formatDate}")
+                    when (drugs.date){
+                        "${formatDate}" -> Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
+                    }
+
+                }
 
             }
+
         }
     }
 }

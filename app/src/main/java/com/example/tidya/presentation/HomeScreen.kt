@@ -22,10 +22,17 @@ import com.example.tidya.bottomnav.BottomBarScreen
 import com.example.tidya.database.DrugViewModel
 import com.example.tidya.model.User
 import com.example.tidya.outfit
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(user: User, navController: NavController,drugViewModel: DrugViewModel = hiltViewModel()) {  //HomeScreen(user: User)
+
+    val currentDateTime = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("d MMM yyyy")
+    val today = currentDateTime.format(formatter)
+
 
     val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
 
@@ -102,9 +109,12 @@ fun HomeScreen(user: User, navController: NavController,drugViewModel: DrugViewM
 
             LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
                 items(drugs.value) { drugs ->
-                    Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
+                    when (drugs.date){
+                        "${today}" -> Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
+                    }
 
                 }
+
             }
         }
     }
