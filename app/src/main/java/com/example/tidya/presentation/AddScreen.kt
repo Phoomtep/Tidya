@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,6 +40,10 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
     val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
 
     val name = remember {
+        mutableStateOf("")
+    }
+
+    val alert = remember {
         mutableStateOf("")
     }
 
@@ -232,13 +237,19 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
         {
             Button(
                 onClick = {
-                    drugViewModel.insertDrug(
-                        GetDrug(
-                            name = name.value,
-                            time = "${selectedTime.value}",
-                            date = "${formatDate1}",
-                        )
-                    ); navController.navigate(BottomBarScreen.Home.route)
+                          if (name.value != "" && selectedTime.value != ""){
+                              drugViewModel.insertDrug(
+                                GetDrug(
+                                        name = name.value,
+                                        time = "${selectedTime.value}",
+                                        date = "${formatDate1}",
+                                )
+                              ); navController.navigate(BottomBarScreen.Home.route)
+                          }
+                        else{
+                             alert.value = "Please Complete all fields."
+                          }
+
                 }, Modifier.size(50.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff16C2D5)),
@@ -248,6 +259,12 @@ fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltVi
             }
         }
 
-
+        Column(modifier = Modifier.padding(top = 40.dp)) {
+            Text(text = "${alert.value}"
+                ,color = Color.Red
+                ,textAlign = TextAlign.Center
+                ,modifier = Modifier
+                    .fillMaxWidth())
+        }
     }
 }
