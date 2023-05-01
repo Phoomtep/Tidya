@@ -21,13 +21,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.tidya.R
 import com.example.tidya.bottomnav.BottomBarScreen
+import com.example.tidya.database.DrugViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.tidya.database.GetDrug
+
 
 @Composable
 
-fun AddScreen(navController: NavController){
+fun AddScreen(navController: NavController,drugViewModel: DrugViewModel = hiltViewModel()){
+
+    val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
+
+    val name = remember {
+        mutableStateOf("")
+    }
+
+    val date = remember {
+        mutableStateOf("")
+    }
+    val dateVal = date.value
+
 
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -96,12 +113,12 @@ fun AddScreen(navController: NavController){
         Text(text = "Generic name or Display name",Modifier.padding(top = 20.dp, start = 20.dp))
         var text by remember { mutableStateOf("")}
         OutlinedTextField(
-            value = text,
-            label = { Text(text = "Enter Drug Name") },
-            onValueChange = {
-                text = it
-            },
-            modifier = Modifier.padding(start = 20.dp)
+            value = name.value, onValueChange = {name.value = it}
+            //label = { Text(text = "Enter Drug Name") },
+            //onValueChange = {
+            //text = it
+            //},
+            ,modifier = Modifier.padding(start = 20.dp)
         )
         Text(text = "Reminder",Modifier.padding(top = 20.dp, start = 20.dp))
 
@@ -150,41 +167,45 @@ fun AddScreen(navController: NavController){
             }
         }
 
-//        Row(modifier = Modifier
-//            .fillMaxSize()
-//        ){
-//            Text(text = "Frequency",Modifier.padding(top = 20.dp, start = 20.dp))
-//            OutlinedTextField(
-//                value = SelectedText,
-//                onValueChange = { SelectedText = it },
-//                modifier = Modifier.padding(start = 10.dp,end = 20.dp),
-//                label = {Text("Choose")},
-//                trailingIcon = {
-//                    Icon(icon,"contentDescription",
-//                        Modifier.clickable { selectedExpand = !selectedExpand })
-//                }
-//            )
-//            DropdownMenu(
-//                expanded = selectedExpand,
-//                onDismissRequest = { selectedExpand = false }
-//            ) {
-//                selectedChoice.forEach { label ->
-//                    DropdownMenuItem(onClick = {
-//                        SelectedText = label
-//                        selectedExpand = false
-//                    }) {
-//                        Text(text = label,Modifier.padding(top = 5.dp,start = 30.dp))
-//                    }
-//                }
-//            }
-//        }
+        Row(modifier = Modifier
+            .fillMaxSize()
+        ){
+            Text(text = "Frequency",Modifier.padding(top = 20.dp, start = 20.dp))
+            OutlinedTextField(
+                value = SelectedText,
+                onValueChange = { SelectedText = it },
+                modifier = Modifier.padding(start = 10.dp,end = 20.dp),
+                label = {Text("Choose")},
+                trailingIcon = {
+                    Icon(icon,"contentDescription",
+                        Modifier.clickable { selectedExpand = !selectedExpand })
+                }
+            )
+            DropdownMenu(
+                expanded = selectedExpand,
+                onDismissRequest = { selectedExpand = false }
+            ) {
+                selectedChoice.forEach { label ->
+                    DropdownMenuItem(onClick = {
+                        SelectedText = label
+                        selectedExpand = false
+                    }) {
+                        Text(text = label,Modifier.padding(top = 5.dp,start = 30.dp))
+                    }
+                }
+            }
+        }
 
-        Column(Modifier.fillMaxSize()
-            .padding(top = 140.dp),
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(top = 140.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
-            Button(onClick = {
+            Button(onClick = { drugViewModel.insertDrug(
+                GetDrug(name = name.value, time  = "${selectedTime.value}" , date = "${selectedDate.value}",)
+            )
             },Modifier.size(50.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff16C2D5)),
@@ -193,6 +214,8 @@ fun AddScreen(navController: NavController){
                 Icon(Icons.Default.Add ,contentDescription = null, tint=Color.White)
             }
         }
+
+
     }
 
 }

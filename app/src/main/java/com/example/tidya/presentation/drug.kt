@@ -2,6 +2,7 @@ package com.example.tidya.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
@@ -15,16 +16,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tidya.R
+import com.example.tidya.database.DrugViewModel
 
 //name: String, time: String, isComplete: Boolean
 @Composable
-fun Drug(name: String, time: String, isComplete: Boolean) {
+fun Drug(id : Int ,name: String, time: String, isComplete: Boolean,drugViewModel: DrugViewModel = hiltViewModel()) {
+
+    val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
     var status by remember { mutableStateOf(isComplete) }
     var textcolor = when (status){
         true -> Color(0xff7D7D7D)
         false -> Color(0xff000000)
     }
+
+
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(start = 20.dp, end = 20.dp, top = 25.dp)
@@ -36,6 +43,7 @@ fun Drug(name: String, time: String, isComplete: Boolean) {
         , verticalAlignment = Alignment.CenterVertically) {
 
         Column(modifier = Modifier.fillMaxHeight()
+
             , verticalArrangement = Arrangement.Center) {
             Text(text = name, Modifier
                 .padding(start = 20.dp)
@@ -59,13 +67,17 @@ fun Drug(name: String, time: String, isComplete: Boolean) {
                 .background(color = Color(0xffD9D9D9), shape = RoundedCornerShape(5.dp))
                 .height(24.dp)
                 .width(24.dp)
-            , onClick = { status = !status ;println("$name | $status") }) { //เขียน Update Database ตรงนี้ !!!!!!
-            Icon(painter = painterResource(id = R.drawable.baseline_check_24),
-                contentDescription = null,
-                tint = when (status){
-                true -> Color.Unspecified
-                false -> Color.Transparent
-            }
+                //, onClick = {drugViewModel.updateStatus(id = 8)}){
+                , onClick = { status = !status ;
+                    when (status){
+                        true -> drugViewModel.updateStatusTrue(id = id)
+                        false -> drugViewModel.updateStatusFalse(id = id)} }) { //เขียน Update Database ตรงนี้ !!!!!!
+                Icon(painter = painterResource(id = R.drawable.baseline_check_24),
+                    contentDescription = null,
+                    tint = when (status){
+                        true -> Color.Unspecified
+                        false -> Color.Transparent
+                    }
                 )
             }
         }

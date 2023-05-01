@@ -4,87 +4,109 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.tidya.R
 import com.example.tidya.bottomnav.BottomBarScreen
+import com.example.tidya.database.DrugViewModel
 import com.example.tidya.model.User
 import com.example.tidya.outfit
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(user: User, navController: NavController){  //HomeScreen(user: User)
-    val currentDate = LocalDate.now()
-    Scaffold {innerPadding ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)) {
+fun HomeScreen(user: User, navController: NavController,drugViewModel: DrugViewModel = hiltViewModel()) {  //HomeScreen(user: User)
+
+    val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
+
+    Scaffold { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             Text(
-                text = "Home", modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp),
+                text = "Home",
+                modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 fontFamily = outfit
             )
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
-                .height(150.dp)
-                .background(
-                    Color(0xff16C2D5),
-                    shape = RoundedCornerShape(20.dp)
-                )) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+                    .height(150.dp)
+                    .background(
+                        Color(0xff16C2D5),
+                        shape = RoundedCornerShape(20.dp)
+                    )
+            ) {
                 Row() {
-                    Icon(painter = painterResource(id = R.drawable.baseline_face_24),
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_face_24),
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.padding(start = 20.dp, top = 22.dp))
-                    Text(text = "${user.displayName}",
+                        modifier = Modifier.padding(start = 20.dp, top = 20.dp)
+                    )
+                    Text(
+                        text = "${user.displayName}",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.h4,
                         fontSize = 20.sp,
-                        modifier = Modifier.padding(start = 20.dp, top = 25.dp))
+                        modifier = Modifier.padding(start = 20.dp, top = 25.dp)
+                    )
                 }
-                Text(text = "${user.email}",
+                Text(
+                    text = "${user.email}",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.h4,
                     fontSize = 16.sp,
-                    modifier = Modifier.padding(start = 80.dp))
+                    modifier = Modifier.padding(start = 80.dp)
+                )
             }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp)) {
-            Text(text = "Today activityes", modifier = Modifier
-                .padding(start = 20.dp, top = 15.dp),fontWeight = FontWeight.Bold)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+            ) {
+                Text(
+                    text = "Today activityes", modifier = Modifier
+                        .padding(start = 20.dp, top = 15.dp), fontWeight = FontWeight.Bold
+                )
 
-            IconButton(modifier = Modifier.padding(start = 180.dp), onClick = {navController.navigate(
-                BottomBarScreen.Add.route)}) {
-                Icon(painter = painterResource(id = R.drawable.baseline_add_24),
-                    contentDescription = null,
-                    tint = Color.Unspecified)
+                IconButton(modifier = Modifier.padding(start = 180.dp), onClick = {
+                    navController.navigate(
+                        BottomBarScreen.Add.route
+                    )
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
                 }
             }
 
-            Column(modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 60.dp)) {
+            LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
+                items(drugs.value) { drugs ->
+                    Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
 
-                Drug("Drug", "11:00", true)
-                Drug("Drug2", "12:00", false)
-
+                }
             }
         }
     }
 }
+

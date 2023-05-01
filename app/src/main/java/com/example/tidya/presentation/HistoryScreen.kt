@@ -72,9 +72,6 @@ fun HistoryScreen(user: User){
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 60.dp)) {
 
-                Drug("Drug", "11:00", true)
-                Drug("Drug2", "12:00", false)
-
             }
         }
     }
