@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -17,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,7 +39,7 @@ val formatter = DateTimeFormatter.ofPattern("d MMM yyyy")
 @Composable
 fun HistoryScreen(user: User,drugViewModel: DrugViewModel = hiltViewModel()){
 
-    val drugs = drugViewModel.drugs//.collectAsState(initial = emptyList())
+    val drugs = drugViewModel.drugs.collectAsState(initial = emptyList())
 
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -80,10 +82,14 @@ fun HistoryScreen(user: User,drugViewModel: DrugViewModel = hiltViewModel()){
                 items(drugs.value) { drugs ->
                     println(drugs.date)
                     println("${formatDate}")
-                    when (drugs.date){
-                        "${formatDate}" -> Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
+                    when (drugs.date) {
+                        "${formatDate}" -> Row(
+                            modifier = Modifier.clip(RoundedCornerShape(60f))
+                                .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                        ) {
+                            Drug(drugs.id, drugs.name, drugs.time, drugs.Status)
+                        }
                     }
-
                 }
 
             }

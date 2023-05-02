@@ -112,7 +112,7 @@ fun HomeScreen(user: User, navController: NavController,drugViewModel: DrugViewM
                 items(drugs.value) { drugs ->
                     when (drugs.date){
                         "${today}" -> Row(modifier = Modifier.clip(RoundedCornerShape(60f))
-                            .padding(start = 20.dp, end = 20.dp)) {
+                            .padding(start = 20.dp, end = 20.dp, top=20.dp)) {
                             Drug(drugs.id, drugs.name, drugs.time, drugs.Status)
                         }
                     }
