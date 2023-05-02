@@ -26,4 +26,7 @@ interface DrugDao {
     @Query("UPDATE GetDrug SET Status = 0 WHERE id = :id")
     fun updateStatusFalse(id : Int)
 
+    @Query("DELETE FROM GetDrug WHERE id = :id")
+    fun deleteData(id: Int)
+
 }

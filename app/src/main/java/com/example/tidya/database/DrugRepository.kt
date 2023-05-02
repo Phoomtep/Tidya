@@ -40,4 +40,10 @@ class DrugRepository @Inject constructor(private val DrugDao : DrugDao) {
             DrugDao.updateStatusFalse(id)
         }
     }
+
+    suspend fun deleteData(id : Int) {
+        withContext(Dispatchers.IO) {
+            DrugDao.deleteData(id)
+        }
+    }
 }

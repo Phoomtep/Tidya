@@ -55,5 +55,12 @@ class DrugViewModel @Inject constructor(private val repository: DrugRepository):
 
     }
 
+    fun deleteData(id: Int){
+        viewModelScope.launch {
+            repository.deleteData(id)
+            _drugs.emit(repository.getAllItems())
+        }
+    }
+
 
 }

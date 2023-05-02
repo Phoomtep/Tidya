@@ -29,8 +29,11 @@ fun Drug(id : Int ,name: String, time: String, isComplete: Boolean,drugViewModel
 
     val swipeDelete = SwipeAction(
         onSwipe = {
+            drugViewModel.deleteData(id)
             Log.d("$id","Delete")
             //ลบตรงนี้
+
+
         },
         icon = {
             Icon(
