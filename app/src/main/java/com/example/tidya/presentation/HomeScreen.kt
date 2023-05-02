@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -110,7 +111,10 @@ fun HomeScreen(user: User, navController: NavController,drugViewModel: DrugViewM
             LazyColumn(modifier = Modifier.padding(bottom = 60.dp)) {
                 items(drugs.value) { drugs ->
                     when (drugs.date){
-                        "${today}" -> Drug(drugs.id,drugs.name, drugs.time, drugs.Status)
+                        "${today}" -> Row(modifier = Modifier.clip(RoundedCornerShape(60f))
+                            .padding(start = 20.dp, end = 20.dp)) {
+                            Drug(drugs.id, drugs.name, drugs.time, drugs.Status)
+                        }
                     }
 
                 }
